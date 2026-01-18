@@ -1,10 +1,10 @@
-using FishNet.Object;
+﻿using FishNet.Object;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
-    [Header("Singelton")]
+    [Header("Singleton")]
     public static PlayerController localInstance;
 
     [Header("Config")]
@@ -16,7 +16,6 @@ public class PlayerController : NetworkBehaviour
     private Vector2 moveInput;
     private Animator animator;
     private bool isBoostPressed;
-    private bool _boosting;
 
     [Header("Background")]
     public float boostBackgroundSpeed = 1f;
@@ -43,7 +42,6 @@ public class PlayerController : NetworkBehaviour
             localInstance = this;
             GetComponent<PlayerInput>().enabled = true;
 
-            // UI initialisieren
             if (UIController.Instance != null)
             {
                 UIController.Instance.UpdateEnegeryBar(energy, maxEnergy);
@@ -63,13 +61,11 @@ public class PlayerController : NetworkBehaviour
             if (energy > 10)
             {
                 isBoostPressed = true;
-                _boosting = true;
             }
         }
         else if (context.canceled)
         {
             isBoostPressed = false;
-            _boosting = false;
         }
     }
 
@@ -77,27 +73,31 @@ public class PlayerController : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        // Boost nur wenn nach rechts UND genug Energy
         bool canBoost = isBoostPressed && moveInput.x > 0f && energy > 0f;
 
         boostBackgroundSpeed = canBoost ? boostBackground : 1f;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.worldSpeed = canBoost ? -10f : -2f;
+        }
+
         float currentSpeed = canBoost ? boostSpeed : moveSpeed;
         Vector2 movement = moveInput.normalized * currentSpeed;
         rb.linearVelocity = movement;
 
         // Energy Management
-        if (_boosting && energy > 0f)
+        if (canBoost && energy > 0f)
         {
             energy -= 0.2f;
             if (energy < 0f) energy = 0f;
         }
-        else if (!_boosting && energy < maxEnergy)
+        else if (!canBoost && energy < maxEnergy)
         {
             energy += energyRegen;
             if (energy > maxEnergy) energy = maxEnergy;
         }
 
-        // Update UI 
         if (UIController.Instance != null)
         {
             UIController.Instance.UpdateEnegeryBar(energy, maxEnergy);

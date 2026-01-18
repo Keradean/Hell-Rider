@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -2409023884352365623}
   - component: {fileID: 1609952206573225743}
   - component: {fileID: 7574936167062303240}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 262802283
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -261264736, guid: 5568e25aab6123249a0042673660f271, type: 3}
@@ -239,7 +239,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584328482289066021
+  _initializedTimestamp: -8584328426881361980
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
