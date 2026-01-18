@@ -19,9 +19,9 @@ public class ParallaxBackground : MonoBehaviour
     {
         float speedMultiplier = 1f;
 
-        if (PlayerMovement.localInstance != null)
+        if (PlayerController.localInstance != null)
         {
-            speedMultiplier = PlayerMovement.localInstance.boostBackgroundSpeed;
+            speedMultiplier = PlayerController.localInstance.boostBackgroundSpeed;
         }
 
         transform.position += new Vector3(moveSpeed * speedMultiplier * Time.deltaTime, 0, 0);

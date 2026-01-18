@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 5361328285992106518}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.03668, y: 0.69652, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -239,7 +239,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584328527553891484
+  _initializedTimestamp: -8584328482289066021
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 5306845881338098766
   SceneId: 0
   SerializedTransformProperties:
-    Position: {x: -2.7463264, y: 0.229689, z: 0}
+    Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     Scale: {x: 1, y: 1, z: 1}
     IsValid: 1
@@ -327,6 +327,11 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 7909227411701365449}
   moveSpeed: 2
   boostSpeed: 4
+  boostBackgroundSpeed: 1
+  boostBackground: 5
+  energy: 0
+  maxEnergy: 50
+  energyRegen: 0.1
 --- !u!114 &7574936167062303240
 MonoBehaviour:
   m_ObjectHideFlags: 0
