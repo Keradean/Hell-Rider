@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using FishNet.Object;
+using System.Collections.Generic;
 
 public class ObjectSpawner : NetworkBehaviour
 {
@@ -16,7 +17,7 @@ public class ObjectSpawner : NetworkBehaviour
     {
         base.OnStartServer();
         spawnTimer = spawnInterval;
-    }
+        }
 
     void Update()
     {
@@ -28,12 +29,12 @@ public class ObjectSpawner : NetworkBehaviour
         {
             SpawnObject();
             spawnTimer = 0f;
-        }
-    }
+            }
+            }
 
     private void SpawnObject()
     {
-        
+
         float randomY = Random.Range(spawnYRange.x, spawnYRange.y);
         Vector3 spawnPos = new Vector3(transform.position.x, randomY, 0f);
 
