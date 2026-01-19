@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - AlphaWall
+  - Obstacle
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2007791449
+    locked: 0
+  - name: Objects
+    uniqueID: 1423539989
     locked: 0
   - name: Player
     uniqueID: 262802283
