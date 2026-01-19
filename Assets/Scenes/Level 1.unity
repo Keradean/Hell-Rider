@@ -1437,7 +1437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1178265976}
-  - component: {fileID: 1178265977}
+  - component: {fileID: 1178265980}
   - component: {fileID: 1178265979}
   - component: {fileID: 1178265978}
   m_Layer: 0
@@ -1462,24 +1462,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1865078276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178265977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178265975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a5f043f6f0de946b6b33b130ad9f55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectSpawner
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 1865078277}
-  _networkObjectCache: {fileID: 0}
-  prefab: {fileID: 5697395649182730602, guid: b5fdd22d2b4faf64ca34537ac302539e, type: 3}
-  spawnInterval: 1
-  spawnYRange: {x: -5, y: 4}
 --- !u!114 &1178265978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1562,34 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &1178265980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178265975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a5f043f6f0de946b6b33b130ad9f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSpawner
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1178265978}
+  _networkObjectCache: {fileID: 0}
+  spawnYRange: {x: -5, y: 4}
+  waveNumber: 0
+  waves:
+  - prefab: {fileID: 8741728840732666171, guid: 08f06ab870cd15a47ab85514c4491c7a, type: 3}
+    spawnTimer: 0
+    spawnInterval: 1
+    objectsPerWave: 5
+    SpawnedObjectCount: 0
+  - prefab: {fileID: 5697395649182730602, guid: b5fdd22d2b4faf64ca34537ac302539e, type: 3}
+    spawnTimer: 0
+    spawnInterval: 1.5
+    objectsPerWave: 3
+    SpawnedObjectCount: 0
 --- !u!1 &1183118318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361744536}
   m_Layer: 0
-  m_Name: ===== LevelBoundaries ===== (3)
+  m_Name: ===== LevelBoundaries =====
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

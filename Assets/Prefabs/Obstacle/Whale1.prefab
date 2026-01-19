@@ -142,7 +142,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584328278019266217
+  _initializedTimestamp: -8584327796982103588
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 5697395649182730602}
   _networkObjectCache: {fileID: 5697395649182730602}
-  _componentConfiguration: 3
+  _componentConfiguration: 0
   _synchronizeParent: 0
   _packing:
     Position: 1
