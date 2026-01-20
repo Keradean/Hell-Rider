@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
+public class MenuBackground : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float moveSpeed;
@@ -26,12 +26,6 @@ public class ParallaxBackground : MonoBehaviour
     private void Update()
     {
         float speedMultiplier = 1f;
-
-        // Prüfe ob der lokale Player existiert
-        if (PlayerController.localInstance != null)
-        {
-            speedMultiplier = PlayerController.localInstance.boostBackgroundSpeed;
-        }
 
         transform.position += new Vector3(moveSpeed * speedMultiplier * Time.deltaTime, 0, 0);
 

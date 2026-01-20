@@ -1,7 +1,7 @@
 ﻿using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using FishNet.Object.Synchronizing;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -32,7 +32,9 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float maxEnergy;
     [SerializeField] private float energyRegen;
 
-    // KORREKTE FishNet 4.x SyncVar Syntax
+    [Header("Pause")]
+    private bool isPausedLocally = false;
+
     private readonly SyncVar<Vector2> syncVelocity = new SyncVar<Vector2>();
 
     private void Awake()
@@ -68,11 +70,14 @@ public class PlayerController : NetworkBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isPausedLocally) return;
         moveInput = context.ReadValue<Vector2>();
     }
 
     public void OnBoost(InputAction.CallbackContext context)
     {
+        if (isPausedLocally) return;
+
         if (context.performed)
         {
             if (energy > 10)
@@ -86,9 +91,49 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        isPausedLocally = !isPausedLocally;
+
+        if (UIController.Instance != null)
+        {
+            if (isPausedLocally)
+            {
+                UIController.Instance.pausePannel.SetActive(true);
+                if (IsOwner)
+                {
+                    Time.timeScale = 0f;
+                }
+            }
+            else
+            {
+                UIController.Instance.pausePannel.SetActive(false);
+                if (IsOwner) 
+                { 
+                Time.timeScale = 1f;
+                }
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (!IsOwner) return;
+
+        // Pause Check
+        if (isPausedLocally)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
 
         bool canBoost = isBoostPressed && moveInput.x > 0f && energy > 0f;
         boostBackgroundSpeed = canBoost ? boostBackground : 1f;
@@ -155,7 +200,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (IsOwner) return;
 
-        // Position updaten
+        // Position wird geupdaten
         if (rb != null)
         {
             transform.position += (Vector3)syncVelocity.Value * Time.deltaTime;
@@ -165,12 +210,14 @@ public class PlayerController : NetworkBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsOwner) return;
+        if (isPausedLocally) return;
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             TakeDamage(1);
         }
     }
+
     // Schaden nehmen und Ui aktualisieren
     private void TakeDamage(int damage)
     {
@@ -187,13 +234,20 @@ public class PlayerController : NetworkBehaviour
             Die();
         }
     }
-    // Der tod ist kompliziert
+
     private void Die()
     {
         DieServerRpc();
         moveSpeed = 0f;
         boostSpeed = 0f;
+
+        // Manager lädt Scene (läuft weiter auch wenn Player weg ist!)
+        if (IsOwner && GameOverManager.Instance != null)
+        {
+            GameOverManager.Instance.LoadGameOverDelayed(2f);
+        }
     }
+
 
     [ServerRpc]
     private void DieServerRpc()
@@ -205,7 +259,7 @@ public class PlayerController : NetworkBehaviour
             ServerManager.Spawn(explosion);
         }
 
-        // Player deaktivieren
+        // Player wird deaktivieren
         DieObserversRpc();
     }
 
@@ -214,4 +268,5 @@ public class PlayerController : NetworkBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }
