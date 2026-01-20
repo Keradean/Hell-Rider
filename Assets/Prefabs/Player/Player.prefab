@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -5916171287041438410}
   - component: {fileID: 6080060306843910130}
   - component: {fileID: 1768894997743263314}
-  - component: {fileID: 4256742063824028539}
   - component: {fileID: 7909227411701365449}
   - component: {fileID: -2409023884352365623}
   - component: {fileID: 1609952206573225743}
@@ -185,28 +184,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4256742063824028539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5361328285992106518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Animating.NetworkAnimator
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 7909227411701365449}
-  _networkObjectCache: {fileID: 7909227411701365449}
-  IgnoredParameters: []
-  _animator: {fileID: 1768894997743263314}
-  _synchronizeWhenDisabled: 0
-  _smoothFloats: 1
-  _interpolation: 2
-  _clientAuthoritative: 1
-  _sendToOwner: 0
 --- !u!114 &7909227411701365449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +203,6 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
-  - {fileID: 4256742063824028539}
   - {fileID: -2409023884352365623}
   - {fileID: 1609952206573225743}
   InitializedParentNetworkBehaviour: {fileID: 0}
@@ -239,7 +215,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584328426881361980
+  _initializedTimestamp: -8584326984534183495
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -255,7 +231,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 2
+  <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 5306845881338098766
   SceneId: 0
@@ -276,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Transforming.NetworkTransform
-  _componentIndexCache: 1
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 7909227411701365449}
   _networkObjectCache: {fileID: 7909227411701365449}
   _componentConfiguration: 3
@@ -322,13 +298,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 561e1c29c151ca34faf463c2b2458024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _componentIndexCache: 2
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 7909227411701365449}
   _networkObjectCache: {fileID: 7909227411701365449}
   moveSpeed: 2
   boostSpeed: 4
   boostBackgroundSpeed: 1
   boostBackground: 5
+  health: 0
+  maxHealth: 5
+  explosionEffect: {fileID: 8342641025809652997, guid: 2de28fbcab181574798720c39588f1a0, type: 3}
   energy: 0
   maxEnergy: 50
   energyRegen: 0.1
@@ -453,6 +432,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1609952206573225743}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0b7e7853-c122-4e3f-8c8a-561dce3ed9f8
+    m_ActionName: 'UI/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

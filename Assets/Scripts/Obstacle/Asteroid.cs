@@ -40,7 +40,6 @@ public class Asteroid : NetworkBehaviour
     {
         if (!IsServerInitialized) return;
 
-        // Update Velocity mit aktuellem worldSpeed
         float currentWorldSpeed = GameManager.Instance != null ? GameManager.Instance.worldSpeed : -2f;
 
         rb2d.linearVelocity = new Vector2(currentWorldSpeed, pushY);
