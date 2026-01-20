@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -5916171287041438410}
   - component: {fileID: 6080060306843910130}
   - component: {fileID: 1768894997743263314}
-  - component: {fileID: 4256742063824028539}
   - component: {fileID: 7909227411701365449}
   - component: {fileID: -2409023884352365623}
   - component: {fileID: 1609952206573225743}
@@ -185,28 +184,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4256742063824028539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5361328285992106518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: FishNet.Runtime::FishNet.Component.Animating.NetworkAnimator
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 7909227411701365449}
-  _networkObjectCache: {fileID: 7909227411701365449}
-  IgnoredParameters: []
-  _animator: {fileID: 1768894997743263314}
-  _synchronizeWhenDisabled: 0
-  _smoothFloats: 1
-  _interpolation: 2
-  _clientAuthoritative: 1
-  _sendToOwner: 0
 --- !u!114 &7909227411701365449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +203,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
-  - {fileID: 4256742063824028539}
+  - {fileID: 0}
   - {fileID: -2409023884352365623}
   - {fileID: 1609952206573225743}
   InitializedParentNetworkBehaviour: {fileID: 0}
@@ -329,6 +306,9 @@ MonoBehaviour:
   boostSpeed: 4
   boostBackgroundSpeed: 1
   boostBackground: 5
+  health: 0
+  maxHealth: 5
+  explosionEffect: {fileID: 8342641025809652997, guid: 2de28fbcab181574798720c39588f1a0, type: 3}
   energy: 0
   maxEnergy: 50
   energyRegen: 0.1

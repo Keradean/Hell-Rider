@@ -1,6 +1,7 @@
 ﻿using FishNet.Object;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FishNet.Object.Synchronizing;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -21,16 +22,25 @@ public class PlayerController : NetworkBehaviour
     public float boostBackgroundSpeed = 1f;
     [SerializeField] private float boostBackground = 5f;
 
+    [Header("Health Management")]
+    [SerializeField] private float health;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private NetworkObject explosionEffect;
+
     [Header("Energy Management")]
     [SerializeField] private float energy;
     [SerializeField] private float maxEnergy;
     [SerializeField] private float energyRegen;
+
+    // KORREKTE FishNet 4.x SyncVar Syntax
+    private readonly SyncVar<Vector2> syncVelocity = new SyncVar<Vector2>();
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         energy = maxEnergy;
+        health = maxHealth;
     }
 
     public override void OnStartClient()
@@ -41,10 +51,17 @@ public class PlayerController : NetworkBehaviour
         {
             localInstance = this;
             GetComponent<PlayerInput>().enabled = true;
-
             if (UIController.Instance != null)
             {
                 UIController.Instance.UpdateEnegeryBar(energy, maxEnergy);
+                UIController.Instance.UpdateHealthBar(health, maxHealth);
+            }
+        }
+        else
+        {
+            if (rb != null)
+            {
+                rb.bodyType = RigidbodyType2D.Kinematic;
             }
         }
     }
@@ -74,7 +91,6 @@ public class PlayerController : NetworkBehaviour
         if (!IsOwner) return;
 
         bool canBoost = isBoostPressed && moveInput.x > 0f && energy > 0f;
-
         boostBackgroundSpeed = canBoost ? boostBackground : 1f;
 
         if (GameManager.Instance != null)
@@ -86,7 +102,8 @@ public class PlayerController : NetworkBehaviour
         Vector2 movement = moveInput.normalized * currentSpeed;
         rb.linearVelocity = movement;
 
-        // Energy Management
+        syncVelocity.Value = movement;
+
         if (canBoost && energy > 0f)
         {
             energy -= 0.2f;
@@ -110,8 +127,91 @@ public class PlayerController : NetworkBehaviour
     {
         if (animator == null) return;
 
+        // Lokale Animation setzen
         animator.SetFloat("moveX", moveInput.x);
         animator.SetFloat("moveY", moveInput.y);
         animator.SetBool("boosting", isBoosting);
+
+        // Über RPC synchronisieren
+        if (IsOwner)
+        {
+            UpdateAnimationObserversRpc(moveInput.x, moveInput.y, isBoosting);
+        }
+    }
+
+    [ObserversRpc(ExcludeOwner = true, BufferLast = true)]
+    private void UpdateAnimationObserversRpc(float moveX, float moveY, bool boosting)
+    {
+        if (animator != null)
+        {
+            animator.SetFloat("moveX", moveX);
+            animator.SetFloat("moveY", moveY);
+            animator.SetBool("boosting", boosting);
+        }
+    }
+
+    // Für nicht Owner: Update Position basierend auf Velocity
+    private void Update()
+    {
+        if (IsOwner) return;
+
+        // Position updaten
+        if (rb != null)
+        {
+            transform.position += (Vector3)syncVelocity.Value * Time.deltaTime;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!IsOwner) return;
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            TakeDamage(1);
+        }
+    }
+    // Schaden nehmen und Ui aktualisieren
+    private void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health < 0) health = 0;
+
+        if (UIController.Instance != null)
+        {
+            UIController.Instance.UpdateHealthBar(health, maxHealth);
+        }
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    // Der tod ist kompliziert
+    private void Die()
+    {
+        DieServerRpc();
+        moveSpeed = 0f;
+        boostSpeed = 0f;
+    }
+
+    [ServerRpc]
+    private void DieServerRpc()
+    {
+        // Explosion über Netzwerk spawnen
+        if (explosionEffect != null)
+        {
+            NetworkObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
+            ServerManager.Spawn(explosion);
+        }
+
+        // Player deaktivieren
+        DieObserversRpc();
+    }
+
+    [ObserversRpc]
+    private void DieObserversRpc()
+    {
+        gameObject.SetActive(false);
     }
 }

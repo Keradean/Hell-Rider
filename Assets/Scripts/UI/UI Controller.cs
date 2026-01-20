@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Slider energyBar;
     [SerializeField] private TMP_Text energyText;
+    [SerializeField] private Slider healthBar;
+    [SerializeField] private TMP_Text healthText;
     //[SerializeField] private TMP_Text scoreText;
 
     private void Awake()
@@ -33,5 +35,14 @@ public class UIController : MonoBehaviour
         energyBar.value = current;
 
         energyText.text = Mathf.RoundToInt(current) + " / " + Mathf.RoundToInt(max);
+    }
+    public void UpdateHealthBar(float current, float max)
+    {
+        if (healthBar == null || healthText == null) return;
+
+        healthBar.maxValue = max;
+        healthBar.value = current;
+
+        healthText.text = Mathf.RoundToInt(current) + " / " + Mathf.RoundToInt(max);
     }
 }
