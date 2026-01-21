@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -27,6 +28,6 @@ public class GameOverManager : MonoBehaviour
     private IEnumerator LoadGameOverCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-        UnitySceneManager.LoadScene(3);
+        UnitySceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
 }

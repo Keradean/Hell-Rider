@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 4127639579554247520}
   - component: {fileID: -6641218913658327153}
   - component: {fileID: 8468467010308553365}
-  m_Layer: 0
+  - component: {fileID: 78044616874365900}
+  m_Layer: 10
   m_Name: Whale1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,6 +133,7 @@ MonoBehaviour:
   NetworkBehaviours:
   - {fileID: 2339686697827283257}
   - {fileID: 4127639579554247520}
+  - {fileID: 78044616874365900}
   InitializedParentNetworkBehaviour: {fileID: 0}
   InitializedNestedNetworkObjects: []
   RuntimeParentNetworkBehaviour: {fileID: 0}
@@ -142,7 +144,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584327796982103588
+  _initializedTimestamp: -8584326108117187575
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -262,3 +264,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &78044616874365900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641706918033239935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8869e076aeb54de47a1b4d27f0596661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 5697395649182730602}
+  _networkObjectCache: {fileID: 5697395649182730602}
+  maxHealth: 10
+  explosionEffect: {fileID: 0}
