@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 112}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 44817
+  controlID: 49842
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -199,8 +199,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: -215914
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
@@ -261,7 +260,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 44818
+  controlID: 49843
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -924,9 +923,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 4.6211796, y: -1.3506548, z: -0.002454675}
+    m_Target: {x: 3.529524, y: 2.160907, z: -0.08304488}
     speed: 2
-    m_Value: {x: 4.6211796, y: -1.3506548, z: -0.002454675}
+    m_Value: {x: 3.529524, y: 2.160907, z: -0.08304488}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -976,9 +975,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 0.7504412
+    m_Target: 8.809448
     speed: 2
-    m_Value: 0.7504412
+    m_Value: 8.809448
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1060,6 +1059,7 @@ MonoBehaviour:
     - {fileID: -2517808068916483862, guid: 3bdeff7c92c645947b5081fa06a6c8f3, type: 2}
     - {fileID: -8257906307599668301, guid: f7d4fe3b611becc41914aed58319ab7a, type: 2}
     - {fileID: 6891725992167937013, guid: 06b7370e03200e54db3391aca4c41c79, type: 2}
+    - {fileID: 7099980472073356591, guid: f2447af00ed5dcf4288442ea7465951d, type: 2}
     m_ValueSerializationHelper:
     - e00: 1.0694762
       e01: 0
@@ -1189,10 +1189,26 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
+    - e00: 1.1129899
+      e01: 0
+      e02: 0
+      e03: 172.21497
+      e10: 0
+      e11: 1.1129899
+      e12: 0
+      e13: 140.49608
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 06b7370e03200e54db3391aca4c41c79, type: 2}
+  m_AnimatorController: {fileID: 9100000, guid: f2447af00ed5dcf4288442ea7465951d, type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 6891725992167937013, guid: 06b7370e03200e54db3391aca4c41c79, type: 2}
+  - m_Target: {fileID: 7099980472073356591, guid: f2447af00ed5dcf4288442ea7465951d, type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
@@ -1229,7 +1245,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 44819
+  controlID: 49814
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -1307,7 +1323,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Audio
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1315,10 +1331,10 @@ MonoBehaviour:
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
-  m_StartGridSize: 16
+  m_StartGridSize: 67
   m_LastFolders:
-  - Assets/Audio
-  m_LastFoldersGridSize: 16
+  - Assets
+  m_LastFoldersGridSize: 67
   m_LastProjectPath: C:\Users\Teilnehmer\Documents\Unity\Hell Rider
   m_LockTracker:
     m_IsLocked: 0
@@ -1326,9 +1342,9 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 31}
     m_SelectedIDs:
-    - m_Data: 50652
+    - m_Data: 50520
     m_LastClickedID:
-      m_Data: 50652
+      m_Data: 50520
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 50506
@@ -1406,8 +1422,8 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: -215914
-    m_LastClickedInstanceID: -215914
+    - m_Data: -236088
+    m_LastClickedInstanceID: -236088
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 67406
@@ -1415,7 +1431,7 @@ MonoBehaviour:
     - m_Data: 53854
     - m_Data: 61976
     - m_Data: 53732
-    - m_Data: 77572
+    - m_Data: 80530
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1442,7 +1458,7 @@ MonoBehaviour:
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 16
+    m_GridSize: 67
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 50
 --- !u!114 &13
@@ -1733,7 +1749,7 @@ MonoBehaviour:
     m_CachedPref: 151
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -215914
+  m_LastInspectedObjectInstanceID: -236088
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -1818,4 +1834,4 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -215914
+  m_LastSelectedObjectID: -237486
