@@ -549,7 +549,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2185198277718890110, guid: 5d7122c4887afaf4e81bcb1e3f5c91dc, type: 3}
       propertyPath: m_text
-      value: Over
+      value: Win!!!!
       objectReference: {fileID: 0}
     - target: {fileID: 2185198277718890110, guid: 5d7122c4887afaf4e81bcb1e3f5c91dc, type: 3}
       propertyPath: m_fontColorGradient.topLeft.b
@@ -1109,7 +1109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2185198277718890110, guid: 5d7122c4887afaf4e81bcb1e3f5c91dc, type: 3}
       propertyPath: m_text
-      value: Game
+      value: You
       objectReference: {fileID: 0}
     - target: {fileID: 2185198277718890110, guid: 5d7122c4887afaf4e81bcb1e3f5c91dc, type: 3}
       propertyPath: m_fontColorGradient.topLeft.b
@@ -1332,6 +1332,10 @@ PrefabInstance:
     - target: {fileID: 6503488815030154802, guid: ba3f58b96298d124fa4efa438a7982d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -51.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412170642279101664, guid: ba3f58b96298d124fa4efa438a7982d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927042562521135412, guid: ba3f58b96298d124fa4efa438a7982d2, type: 3}
       propertyPath: m_Name

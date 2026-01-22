@@ -1,5 +1,6 @@
 ﻿using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using GameKit.Dependencies.Utilities.ObjectPooling.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,6 +36,10 @@ public class PlayerController : NetworkBehaviour
     [Header("Pause")]
     private bool isPausedLocally = false;
 
+    [Header("Shooting")]
+    [SerializeField] private Transform weapon;
+   // private BulletSpawner bulletSpawner;
+
     private readonly SyncVar<Vector2> syncVelocity = new SyncVar<Vector2>();
 
     private void Awake()
@@ -43,6 +48,8 @@ public class PlayerController : NetworkBehaviour
         animator = GetComponent<Animator>();
         energy = maxEnergy;
         health = maxHealth;
+
+      //  bulletSpawner = FindFirstObjectByType<BulletSpawne>();
     }
 
     public override void OnStartClient()
@@ -122,6 +129,30 @@ public class PlayerController : NetworkBehaviour
                 }
             }
         }
+    }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (isPausedLocally) return;
+
+            Shoot();
+        }
+    }
+
+    private void Shoot()
+    {
+       // if (bulletSpawner == null) return;
+
+        // Schussrichtung nach rechts
+        Vector2 shootDirection = Vector2.right;
+
+        // Spawn Position weapon
+        Vector3 spawnPos = weapon != null ? weapon.position : transform.position;
+
+        // Spawner wird aufgerufen
+        //bulletSpawner.SpawnProjectileServerRpc(spawnPos, shootDirection);
     }
 
     private void FixedUpdate()
@@ -241,7 +272,6 @@ public class PlayerController : NetworkBehaviour
         moveSpeed = 0f;
         boostSpeed = 0f;
 
-        // Manager lädt Scene (läuft weiter auch wenn Player weg ist!)
         if (IsOwner && GameOverManager.Instance != null)
         {
             GameOverManager.Instance.LoadGameOverDelayed(2f);
@@ -268,5 +298,5 @@ public class PlayerController : NetworkBehaviour
     {
         gameObject.SetActive(false);
     }
-
+  
 }
