@@ -16,6 +16,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource Shoot;
     public AudioSource EnemyDeath2;
     public AudioSource Burn;
+    public AudioSource BossHit;
+    public AudioSource bossCharge;
 
 
     // Ensures that there is only one instance of AudioManager (Singleton Pattern)

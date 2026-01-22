@@ -3,6 +3,7 @@ using FishNet.Object;
 
 public class BossOne : NetworkBehaviour
 {
+    private Animator animator;
     private float speedX;
     private float speedY;
     private bool charging;
@@ -10,8 +11,12 @@ public class BossOne : NetworkBehaviour
     private float switchInterval;
     private float switchTimer;
 
-    void Start()
+    [SerializeField] private int lives;
+
+
+    public override void OnStartServer()
     {
+        animator = GetComponent<Animator>();
         EnterPatrolState();
     }
 
@@ -19,53 +24,74 @@ public class BossOne : NetworkBehaviour
     {
         if (!IsServerInitialized) return;
 
-        if(switchTimer < 0)   
-        {
-            switchTimer -= Time.deltaTime;
-        }
-        else
+        switchTimer -= Time.deltaTime;
+
+        if (switchTimer <= 0f)
         {
             if (charging)
-            {
                 EnterPatrolState();
-            }
             else
-            {
                 EnterChargeState();
-            }
         }
 
         if (transform.position.y > 3 || transform.position.y < -3)
-        {
             speedY *= -1;
-        }
 
-        float moveX = speedX * Time.deltaTime;
-        float moveY = speedY * Time.deltaTime;
+        transform.position += new Vector3(
+            speedX * Time.deltaTime,
+            speedY * Time.deltaTime,
+            0f
+        );
 
-        transform.position += new Vector3(moveX, moveY, 0);
-
-        if (transform.position.x <= -11 && IsSpawned)
-        {
+        if (transform.position.x <= -11f && IsSpawned)
             ServerManager.Despawn(gameObject);
-        }
     }
+
 
     void EnterPatrolState()
     {
         speedX = 0;
         speedY = Random.Range(-2f, 2f);
-        switchInterval = 1f; 
+        switchInterval = Random.Range(5f, 10f);
         switchTimer = switchInterval;
         charging = false;
+        animator.SetBool("charging", false);
     }
 
     void EnterChargeState()
     {
         speedX = -5f;
         speedY = 0;
-        switchInterval = 1f;
+        switchInterval = Random.Range(2f, 2.5f); ;
         switchTimer = switchInterval;
         charging = true;
+        animator.SetBool("charging", true);
+        AudioManager.Instance.PlayTunedSound(AudioManager.Instance.bossCharge);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (charging)
+        {
+            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.BossHit);
+            lives -= damage;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!IsServerInitialized) return;
+
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            TakeDamage(0);
+            if (lives <= 0)
+            {
+                AudioManager.Instance.PlaySound(AudioManager.Instance.EnemyDeath2);
+                if (IsSpawned)
+                    ServerManager.Despawn(gameObject);
+            }
+        }
+
     }
 }
