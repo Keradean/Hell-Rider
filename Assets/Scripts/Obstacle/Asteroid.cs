@@ -3,9 +3,6 @@ using FishNet.Object;
 
 public class Asteroid : NetworkBehaviour
 {
-    [Header("Asteroid Sprites")]
-    [SerializeField] private Sprite[] sprites;
-
     [Header("Components")]
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb2d;
