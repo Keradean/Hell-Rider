@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4408962537149314302}
   - component: {fileID: 8741728840732666171}
   - component: {fileID: 6990802953974511397}
-  - component: {fileID: 7684266857339979214}
   m_Layer: 8
   m_Name: Asteroid
   m_TagString: Obstacle
@@ -53,6 +52,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 8741728840732666171}
   _networkObjectCache: {fileID: 8741728840732666171}
+  mWhite: {fileID: 2100000, guid: b5e2048409a3e564386c25b4e5dd5192, type: 2}
   sprites:
   - {fileID: 1097208954, guid: d9f40cd833821cd4f8a31748d08f1d24, type: 3}
   - {fileID: -1904064651, guid: d9f40cd833821cd4f8a31748d08f1d24, type: 3}
@@ -283,20 +283,3 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
---- !u!114 &7684266857339979214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5676094785840737155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8869e076aeb54de47a1b4d27f0596661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
-  _componentIndexCache: 255
-  _addedNetworkObject: {fileID: 8741728840732666171}
-  _networkObjectCache: {fileID: 0}
-  maxHealth: 2
-  explosionEffect: {fileID: 0}

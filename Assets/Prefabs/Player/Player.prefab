@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3082012437878070647
+--- !u!1 &2326911155036855621
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1650595903515186411}
-  - component: {fileID: 2769805436059830146}
+  - component: {fileID: 3783521876238761385}
   m_Layer: 6
-  m_Name: Weapon
+  m_Name: Weapons
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1650595903515186411
+--- !u!4 &3783521876238761385
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3082012437878070647}
+  m_GameObject: {fileID: 2326911155036855621}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 0, z: 0}
+  m_LocalPosition: {x: 0.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7668784505008822833}
   m_Father: {fileID: 4609678880265497544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2769805436059830146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3082012437878070647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5fef02ac88a2641a2b373a4bca3052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletSpawner
-  _componentIndexCache: 3
-  _addedNetworkObject: {fileID: 7909227411701365449}
-  _networkObjectCache: {fileID: 7909227411701365449}
-  projectilePrefab: {fileID: 3667308367496885260, guid: dd541e0551310424f9f54677f98fdbf0, type: 3}
-  projectileSpeed: 10
 --- !u!1 &5361328285992106518
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +49,6 @@ GameObject:
   - component: {fileID: -2409023884352365623}
   - component: {fileID: 1609952206573225743}
   - component: {fileID: 7574936167062303240}
-  - component: {fileID: 1331279045536250912}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -82,12 +64,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5361328285992106518}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.5723467, y: -0.8236302, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.53235, y: -0.82363, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1650595903515186411}
+  - {fileID: 3783521876238761385}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5391403743868194533
@@ -256,10 +238,9 @@ MonoBehaviour:
   NetworkBehaviours:
   - {fileID: -2409023884352365623}
   - {fileID: 1609952206573225743}
-  - {fileID: 1331279045536250912}
-  - {fileID: 2769805436059830146}
   InitializedParentNetworkBehaviour: {fileID: 0}
-  InitializedNestedNetworkObjects: []
+  InitializedNestedNetworkObjects:
+  - {fileID: 0}
   RuntimeParentNetworkBehaviour: {fileID: 0}
   RuntimeChildNetworkBehaviours: []
   _isNetworked: 1
@@ -268,7 +249,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
-  _initializedTimestamp: -8584326094824839231
+  _initializedTimestamp: -8584325293603959012
   NetworkObserver: {fileID: 0}
   _enablePrediction: 0
   _predictionType: 0
@@ -284,13 +265,13 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 3
+  <PrefabId>k__BackingField: 4
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 5306845881338098766
   SceneId: 0
   SerializedTransformProperties:
-    Position: {x: -5.5723467, y: -0.8236302, z: 0}
-    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Position: {x: -5.53235, y: -0.82363, z: 0}
+    Rotation: {x: -0, y: -0, z: -0, w: 1}
     Scale: {x: 1, y: 1, z: 1}
     IsValid: 1
 --- !u!114 &-2409023884352365623
@@ -356,6 +337,7 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 7909227411701365449}
   moveSpeed: 2
   boostSpeed: 4
+  mWhite: {fileID: 2100000, guid: b5e2048409a3e564386c25b4e5dd5192, type: 2}
   boostBackgroundSpeed: 1
   boostBackground: 5
   health: 0
@@ -519,20 +501,53 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1331279045536250912
+--- !u!1 &5717280012734779643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7668784505008822833}
+  - component: {fileID: 3524210955610680510}
+  m_Layer: 6
+  m_Name: Weapon One
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7668784505008822833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5717280012734779643}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3783521876238761385}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3524210955610680510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5361328285992106518}
+  m_GameObject: {fileID: 5717280012734779643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5fef02ac88a2641a2b373a4bca3052, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c64f48211ed9324281de92fe898c94d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletSpawner
-  _componentIndexCache: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 7909227411701365449}
-  _networkObjectCache: {fileID: 7909227411701365449}
-  projectilePrefab: {fileID: 3667308367496885260, guid: dd541e0551310424f9f54677f98fdbf0, type: 3}
-  projectileSpeed: 10
+  _networkObjectCache: {fileID: 0}
+  bulletPrefab: {fileID: 6360690672046375042, guid: 831c35024f4831848aef91fd4fb87dc7, type: 3}
+  speed: 2
+  damage: 1
