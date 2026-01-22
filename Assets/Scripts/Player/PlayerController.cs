@@ -1,6 +1,7 @@
 ﻿using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using GameKit.Dependencies.Utilities.ObjectPooling.Examples;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,10 @@ public class PlayerController : NetworkBehaviour
     private Vector2 moveInput;
     private Animator animator;
     private bool isBoostPressed;
+    private SpriteRenderer spriteRenderer;
+
+    private Material defaultMaterial;
+    [SerializeField] private Material mWhite;
 
     [Header("Background")]
     public float boostBackgroundSpeed = 1f;
@@ -48,8 +53,10 @@ public class PlayerController : NetworkBehaviour
         animator = GetComponent<Animator>();
         energy = maxEnergy;
         health = maxHealth;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        defaultMaterial = spriteRenderer.material;
 
-      //  bulletSpawner = FindFirstObjectByType<BulletSpawne>();
+        //  bulletSpawner = FindFirstObjectByType<BulletSpawne>();
     }
 
     public override void OnStartClient()
@@ -90,6 +97,7 @@ public class PlayerController : NetworkBehaviour
             if (energy > 10)
             {
                 isBoostPressed = true;
+                AudioManager.Instance.PlaySound(AudioManager.Instance.Boost);
             }
         }
         else if (context.canceled)
@@ -118,6 +126,7 @@ public class PlayerController : NetworkBehaviour
                 if (IsOwner)
                 {
                     Time.timeScale = 0f;
+                    AudioManager.Instance.PlaySound(AudioManager.Instance.Pause);
                 }
             }
             else
@@ -126,6 +135,7 @@ public class PlayerController : NetworkBehaviour
                 if (IsOwner) 
                 { 
                 Time.timeScale = 1f;
+                AudioManager.Instance.PlaySound(AudioManager.Instance.Unpause);
                 }
             }
         }
@@ -137,22 +147,8 @@ public class PlayerController : NetworkBehaviour
         {
             if (isPausedLocally) return;
 
-            Shoot();
+            Weapon.Instance.Shoot();
         }
-    }
-
-    private void Shoot()
-    {
-       // if (bulletSpawner == null) return;
-
-        // Schussrichtung nach rechts
-        Vector2 shootDirection = Vector2.right;
-
-        // Spawn Position weapon
-        Vector3 spawnPos = weapon != null ? weapon.position : transform.position;
-
-        // Spawner wird aufgerufen
-        //bulletSpawner.SpawnProjectileServerRpc(spawnPos, shootDirection);
     }
 
     private void FixedUpdate()
@@ -258,6 +254,9 @@ public class PlayerController : NetworkBehaviour
         if (UIController.Instance != null)
         {
             UIController.Instance.UpdateHealthBar(health, maxHealth);
+            AudioManager.Instance.PlaySound(AudioManager.Instance.Hit);
+            spriteRenderer.material = mWhite;
+            StartCoroutine(ResetMaterial());
         }
 
         if (health <= 0)
@@ -277,6 +276,11 @@ public class PlayerController : NetworkBehaviour
             GameOverManager.Instance.LoadGameOverDelayed(2f);
         }
     }
+    IEnumerator ResetMaterial()
+    {
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.material = defaultMaterial;
+    }
 
 
     [ServerRpc]
@@ -287,6 +291,7 @@ public class PlayerController : NetworkBehaviour
         {
             NetworkObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
             ServerManager.Spawn(explosion);
+            AudioManager.Instance.PlaySound(AudioManager.Instance.Death);
         }
 
         // Player wird deaktivieren
@@ -298,5 +303,4 @@ public class PlayerController : NetworkBehaviour
     {
         gameObject.SetActive(false);
     }
-  
 }
