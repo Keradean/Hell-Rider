@@ -549,5 +549,5 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7909227411701365449}
   _networkObjectCache: {fileID: 0}
   bulletPrefab: {fileID: 6360690672046375042, guid: 831c35024f4831848aef91fd4fb87dc7, type: 3}
-  speed: 2
+  speed: 12
   damage: 1

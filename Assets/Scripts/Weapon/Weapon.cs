@@ -28,7 +28,11 @@ public class Weapon : NetworkBehaviour
         if (!IsOwner) return; 
 
         // Server spawnt Bullet!
-        ShootServerRpc(transform.position); 
+        ShootServerRpc(transform.position);
+
+        // Sound abspielen
+        AudioManager.Instance.PlaySound(AudioManager.Instance.Shoot);
+
     }
 
     [ServerRpc]

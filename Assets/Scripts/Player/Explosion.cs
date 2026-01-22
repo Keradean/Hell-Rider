@@ -7,7 +7,7 @@ public class Explosion : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length); // Zerstöre das Objekt nach der Dauer der Animation
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
 }
