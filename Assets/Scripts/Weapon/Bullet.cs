@@ -5,7 +5,7 @@ public class Bullet : NetworkBehaviour
 {
     void Update()
     {
-        if (!IsServerInitialized) return; // ← Nur Server bewegt!
+        if (!IsServerInitialized) return; 
 
         transform.position += new Vector3(Weapon.Instance.speed * Time.deltaTime, 0, 0);
 
@@ -13,22 +13,22 @@ public class Bullet : NetworkBehaviour
         {
             if (IsSpawned)
             {
-                ServerManager.Despawn(gameObject); // ← FishNet Despawn!
+                ServerManager.Despawn(gameObject); 
             }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!IsServerInitialized) return; // ← Nur Server prüft!
+        if (!IsServerInitialized) return; 
 
-        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
-            PlayHitSoundObserversRpc(); // ← Sound für alle!
+            PlayHitSoundObserversRpc(); 
 
             if (IsSpawned)
             {
-                ServerManager.Despawn(gameObject); // ← FishNet Despawn!
+                ServerManager.Despawn(gameObject); 
             }
         }
     }

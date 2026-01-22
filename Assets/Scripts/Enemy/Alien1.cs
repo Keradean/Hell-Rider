@@ -10,6 +10,7 @@ public class Alien1 : NetworkBehaviour
     private Quaternion targetRotation;
     private float moveTimer;
     private float moveInterval;
+
     [SerializeField] private NetworkObject alienDeath; 
     [SerializeField] private NetworkObject alienBurn; 
     [SerializeField] private int lives;
