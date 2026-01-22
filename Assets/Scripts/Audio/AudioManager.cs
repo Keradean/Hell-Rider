@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource Boost;
     public AudioSource Pause;
     public AudioSource Unpause;
+    public AudioSource hitObst;
+    public AudioSource Shoot;
+    public AudioSource EnemyDeath2;
+    public AudioSource Burn;
 
 
     // Ensures that there is only one instance of AudioManager (Singleton Pattern)
@@ -28,6 +32,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioSource sound)
     {
+        sound.Stop();
+        sound.Play(); 
+
+    }
+    public void PlayTunedSound(AudioSource sound)
+    {
+        sound.pitch = Random.Range(0.8f, 1.2f);
         sound.Stop();
         sound.Play(); 
 

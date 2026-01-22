@@ -15,6 +15,8 @@ public class Asteroid : NetworkBehaviour
 
     [Header("Asteroid Sprites")]
     [SerializeField] private Sprite[] sprites;
+    [SerializeField] private GameObject destroyEffect;
+    [SerializeField] private int lives;
 
     private void Awake()
     {
@@ -88,6 +90,14 @@ public class Asteroid : NetworkBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
         {
             FlashWhiteObserversRpc();
+            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.hitObst);
+            lives--;
+            if (lives <= 0)
+            {
+                Instantiate(destroyEffect, transform.position,transform.rotation);
+                AudioManager.Instance.PlayTunedSound(AudioManager.Instance.EnemyDeath);
+                Destroy(gameObject);
+            }
         }
     }
 

@@ -55,8 +55,9 @@ public class PlayerController : NetworkBehaviour
         health = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         defaultMaterial = spriteRenderer.material;
+        float randomScale = Random.Range(0.6f, 1f);
+        transform.localScale = new Vector3(randomScale, randomScale, 1f);
 
-        //  bulletSpawner = FindFirstObjectByType<BulletSpawne>();
     }
 
     public override void OnStartClient()
@@ -239,7 +240,7 @@ public class PlayerController : NetworkBehaviour
         if (!IsOwner) return;
         if (isPausedLocally) return;
 
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(1);
         }
@@ -291,7 +292,7 @@ public class PlayerController : NetworkBehaviour
         {
             NetworkObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
             ServerManager.Spawn(explosion);
-            AudioManager.Instance.PlaySound(AudioManager.Instance.Death);
+            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.Death);
         }
 
         // Player wird deaktivieren
