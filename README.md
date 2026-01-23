@@ -4,7 +4,7 @@ Ein intensives, kompetitives Bullet-Hell-Spiel, in dem zwei Spieler online gegen
 
 ![Unity Version](https://img.shields.io/badge/Unity-6000.0.62f1-black)
 ![FishNet](https://img.shields.io/badge/FishNet-4.x-blue)
-![Status](https://img.shields.io/badge/Status-Fertig-green)
+![Status](https://img.shields.io/badge/Status-Demo-green)
 
 ---
 
