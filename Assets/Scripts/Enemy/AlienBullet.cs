@@ -1,20 +1,17 @@
-﻿using FishNet.Object;
 using UnityEngine;
-using UnityEngine.tvOS;
+using FishNet.Object;
 
-public class Bullet : NetworkBehaviour
+public class AlienBullet : NetworkBehaviour
 {
     public float speed;
-    public Vector3 direction = Vector3.right;
 
     void FixedUpdate()
     {
         if (!IsServerInitialized) return;
 
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
 
-        if (transform.position.x > 10f || transform.position.x < -10f ||
-            transform.position.y > 10f || transform.position.y < -10f)
+        if (transform.position.x < -12f)
         {
             if (IsSpawned)
             {
@@ -27,9 +24,8 @@ public class Bullet : NetworkBehaviour
     {
         if (!IsServerInitialized) return;
 
-        if (collision.gameObject.CompareTag("Obstacle") ||
-            collision.gameObject.CompareTag("Enemy") ||
-            collision.gameObject.CompareTag("Boss"))
+        if (collision.gameObject.CompareTag("Player") ||
+            collision.gameObject.CompareTag("Obstacle"))
         {
             PlayHitSoundObserversRpc();
 

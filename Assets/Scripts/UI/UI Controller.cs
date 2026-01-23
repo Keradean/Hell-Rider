@@ -1,8 +1,6 @@
-using FishNet.Demo.AdditiveScenes;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static ObjectSpawner;
 
 public class UIController : MonoBehaviour
 {
@@ -14,8 +12,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthText;
-
-    public GameObject pausePannel;
+    [SerializeField] private TMP_Text waveText;
+    [SerializeField] private TMP_Text scoreText;  // ✅ NEU
+    public GameObject pausePanel;
 
     private void Awake()
     {
@@ -29,14 +28,15 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        // Pause Panel wird beim Start versteckt
-        if (pausePannel != null)
+        if (pausePanel != null)
         {
-            pausePannel.SetActive(false);
+            pausePanel.SetActive(false);
         }
+
+        UpdateScore(0);
     }
 
-    public void UpdateEnegeryBar(float current, float max)
+    public void UpdateEnergyBar(float current, float max)
     {
         if (energyBar == null || energyText == null) return;
 
@@ -60,5 +60,16 @@ public class UIController : MonoBehaviour
         {
             PlayerController.localInstance.Pause();
         }
+    }
+
+    public void UpdateWaveText(int waveNumber)
+    {
+        if (waveText == null) return;
+        waveText.text = $"Wave {waveNumber + 1}";
+    }
+    public void UpdateScore(int score)
+    {
+        if (scoreText == null) return;
+        scoreText.text = $"Score: {score:N0}";
     }
 }

@@ -15,7 +15,7 @@ public class Asteroid : NetworkBehaviour
 
     [Header("Asteroid Sprites")]
     [SerializeField] private Sprite[] sprites;
-    [SerializeField] private GameObject destroyEffect;
+    [SerializeField] private NetworkObject destroyEffect;
     [SerializeField] private int lives;
 
     private void Awake()
@@ -34,19 +34,6 @@ public class Asteroid : NetworkBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (!IsServerInitialized) return;
-
-        if (transform.position.x < -11)
-        {
-            if (IsSpawned)
-            {
-                ServerManager.Despawn(gameObject);
-            }
-        }
-    }
-
     private void FixedUpdate()
     {
         if (!IsServerInitialized) return;
@@ -56,6 +43,14 @@ public class Asteroid : NetworkBehaviour
             : -2f;
 
         rb2d.linearVelocity = new Vector2(currentWorldSpeed, pushY);
+
+        if (transform.position.x < -11)
+        {
+            if (IsSpawned)
+            {
+                ServerManager.Despawn(gameObject);
+            }
+        }
     }
 
     public override void OnStartServer()
@@ -89,15 +84,27 @@ public class Asteroid : NetworkBehaviour
 
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Bullet"))
         {
-            FlashWhiteObserversRpc();
-            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.hitObst);
-            lives--;
-            if (lives <= 0)
-            {
-                Instantiate(destroyEffect, transform.position,transform.rotation);
-                AudioManager.Instance.PlayTunedSound(AudioManager.Instance.EnemyDeath);
-                Destroy(gameObject);
-            }
+            TakeDamage(1);
+
+        }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            TakeDamage(10);
+        }
+    }
+    [Server]
+    public void TakeDamage(int damage) 
+    {   if (!IsServerInitialized) return;
+
+        FlashWhiteObserversRpc();
+
+        AudioManager.Instance.PlayTunedSound(AudioManager.Instance.hitObst);
+        lives -= damage;
+        if (lives <= 0)
+        {
+            NetworkObject effect = Instantiate(destroyEffect, transform.position, transform.rotation);
+            ServerManager.Spawn(effect); 
+            ServerManager.Despawn(gameObject);
         }
     }
 
