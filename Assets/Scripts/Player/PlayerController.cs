@@ -1,6 +1,5 @@
 ﻿using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using GameKit.Dependencies.Utilities.ObjectPooling.Examples;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,8 +41,7 @@ public class PlayerController : NetworkBehaviour
     private bool isPausedLocally = false;
 
     [Header("Shooting")]
-    [SerializeField] private Transform weapon;
-   // private BulletSpawner bulletSpawner;
+    private Weapon weapon;
 
     private readonly SyncVar<Vector2> syncVelocity = new SyncVar<Vector2>();
 
@@ -55,9 +53,11 @@ public class PlayerController : NetworkBehaviour
         health = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         defaultMaterial = spriteRenderer.material;
+
+        weapon = GetComponentInChildren<Weapon>();
+
         float randomScale = Random.Range(0.6f, 1f);
         transform.localScale = new Vector3(randomScale, randomScale, 1f);
-
     }
 
     public override void OnStartClient()
@@ -70,7 +70,7 @@ public class PlayerController : NetworkBehaviour
             GetComponent<PlayerInput>().enabled = true;
             if (UIController.Instance != null)
             {
-                UIController.Instance.UpdateEnegeryBar(energy, maxEnergy);
+                UIController.Instance.UpdateEnergyBar(energy, maxEnergy); 
                 UIController.Instance.UpdateHealthBar(health, maxHealth);
             }
         }
@@ -123,7 +123,7 @@ public class PlayerController : NetworkBehaviour
         {
             if (isPausedLocally)
             {
-                UIController.Instance.pausePannel.SetActive(true);
+                UIController.Instance.pausePanel.SetActive(true); 
                 if (IsOwner)
                 {
                     Time.timeScale = 0f;
@@ -132,11 +132,11 @@ public class PlayerController : NetworkBehaviour
             }
             else
             {
-                UIController.Instance.pausePannel.SetActive(false);
-                if (IsOwner) 
-                { 
-                Time.timeScale = 1f;
-                AudioManager.Instance.PlaySound(AudioManager.Instance.Unpause);
+                UIController.Instance.pausePanel.SetActive(false);
+                if (IsOwner)
+                {
+                    Time.timeScale = 1f;
+                    AudioManager.Instance.PlaySound(AudioManager.Instance.Unpause);
                 }
             }
         }
@@ -148,15 +148,37 @@ public class PlayerController : NetworkBehaviour
         {
             if (isPausedLocally) return;
 
-            Weapon.Instance.Shoot();
+            if (weapon != null)
+            {
+                weapon.Shoot();
+            }
+        }
+    }
+
+    public void OnShootSecondary(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (isPausedLocally) return;
+
+            if (weapon != null)
+            {
+                weapon.ShootSpread(); ;
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
+        if (!IsOwner)
+        {
+            if (rb != null)
+            {
+                transform.position += (Vector3)syncVelocity.Value * Time.deltaTime;
+            }
+            return;
+        }
 
-        // Pause Check
         if (isPausedLocally)
         {
             rb.linearVelocity = Vector2.zero;
@@ -190,7 +212,7 @@ public class PlayerController : NetworkBehaviour
 
         if (UIController.Instance != null)
         {
-            UIController.Instance.UpdateEnegeryBar(energy, maxEnergy);
+            UIController.Instance.UpdateEnergyBar(energy, maxEnergy); 
         }
 
         UpdateAnimator(canBoost);
@@ -223,30 +245,21 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    // Für nicht Owner: Update Position basierend auf Velocity
-    private void Update()
-    {
-        if (IsOwner) return;
-
-        // Position wird geupdaten
-        if (rb != null)
-        {
-            transform.position += (Vector3)syncVelocity.Value * Time.deltaTime;
-        }
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsOwner) return;
         if (isPausedLocally) return;
 
-        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Obstacle") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
         {
             TakeDamage(1);
         }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            TakeDamage(5);
+        }
     }
 
-    // Schaden nehmen und Ui aktualisieren
     private void TakeDamage(int damage)
     {
         health -= damage;
@@ -277,17 +290,17 @@ public class PlayerController : NetworkBehaviour
             GameOverManager.Instance.LoadGameOverDelayed(2f);
         }
     }
+
     IEnumerator ResetMaterial()
     {
         yield return new WaitForSeconds(0.2f);
         spriteRenderer.material = defaultMaterial;
     }
 
-
     [ServerRpc]
     private void DieServerRpc()
     {
-        // Explosion über Netzwerk spawnen
+
         if (explosionEffect != null)
         {
             NetworkObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
@@ -295,7 +308,6 @@ public class PlayerController : NetworkBehaviour
             AudioManager.Instance.PlayTunedSound(AudioManager.Instance.Death);
         }
 
-        // Player wird deaktivieren
         DieObserversRpc();
     }
 

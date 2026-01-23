@@ -1,31 +1,64 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FishNet.Object;
 
 public class BossOne : NetworkBehaviour
 {
-    private Animator animator;
+    [Header("Movement")]
     private float speedX;
     private float speedY;
     private bool charging;
 
+    [Header("State Timer")]
     private float switchInterval;
     private float switchTimer;
 
-    [SerializeField] private int lives;
+    [Header("References")]
+    private Animator animator;
+    private Transform playerTransform;
 
+    [Header("Stats")]
+    [SerializeField] private int lives = 10;
 
     public override void OnStartServer()
     {
-        animator = GetComponent<Animator>();
+        base.OnStartServer();
+        FindPlayer();
         EnterPatrolState();
     }
 
-    void Update()
+    public override void OnStartClient()
     {
-        if (!IsServerInitialized) return;
+        base.OnStartClient();
+        animator = GetComponent<Animator>();
+    }
 
-        switchTimer -= Time.deltaTime;
+    private void FindPlayer()
+    {
+        if (playerTransform != null) return;
 
+        if (PlayerController.localInstance != null)
+        {
+            playerTransform = PlayerController.localInstance.transform;
+            Debug.Log("Boss found player via localInstance");
+        }
+        else
+        {
+            // Suche nach allen Spielern im Netzwerk
+            PlayerController[] players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+            if (players.Length > 0)
+            {
+                playerTransform = players[0].transform;
+            }
+
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (!IsServerInitialized)
+            return;
+
+        switchTimer -= Time.fixedDeltaTime;
         if (switchTimer <= 0f)
         {
             if (charging)
@@ -34,64 +67,116 @@ public class BossOne : NetworkBehaviour
                 EnterChargeState();
         }
 
-        if (transform.position.y > 3 || transform.position.y < -3)
+        float playerX = playerTransform.position.x;
+        float playerY = playerTransform.position.y;
+
+        if (transform.position.y > 3f || transform.position.y < -3f)
+        {
             speedY *= -1;
+        }
+        else if (!charging && transform.position.x < playerX)
+        {
+            EnterChargeState();
+            speedY = Mathf.Sign(playerY - transform.position.y) * 2f;
+        }
 
         transform.position += new Vector3(
-            speedX * Time.deltaTime,
-            speedY * Time.deltaTime,
+            speedX * Time.fixedDeltaTime,
+            speedY * Time.fixedDeltaTime,
             0f
         );
 
         if (transform.position.x <= -11f && IsSpawned)
+        {
             ServerManager.Despawn(gameObject);
+        }
     }
-
 
     void EnterPatrolState()
     {
-        speedX = 0;
+        speedX = 0f;
         speedY = Random.Range(-2f, 2f);
         switchInterval = Random.Range(5f, 10f);
         switchTimer = switchInterval;
         charging = false;
-        animator.SetBool("charging", false);
+        RpcSetCharging(false);
     }
 
     void EnterChargeState()
     {
         speedX = -5f;
-        speedY = 0;
-        switchInterval = Random.Range(2f, 2.5f); ;
+        speedY = 0f;
+        switchInterval = Random.Range(2f, 2.5f);
         switchTimer = switchInterval;
         charging = true;
-        animator.SetBool("charging", true);
-        AudioManager.Instance.PlayTunedSound(AudioManager.Instance.bossCharge);
+        RpcSetCharging(true);
+        RpcPlayChargeSound();
     }
 
+    [Server]
     public void TakeDamage(int damage)
     {
-        if (charging)
+        lives -= damage;
+        RpcPlayHitSound();
+
+        if (lives <= 0)
         {
-            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.BossHit);
-            lives -= damage;
+            RpcPlayDeathSound();
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AddBossKillScore();
+            }
+
+            if (IsSpawned)
+            {
+                ServerManager.Despawn(gameObject);
+            }
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!IsServerInitialized) return;
+        if (!IsServerInitialized)
+            return;
 
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(0);
-            if (lives <= 0)
-            {
-                AudioManager.Instance.PlaySound(AudioManager.Instance.EnemyDeath2);
-                if (IsSpawned)
-                    ServerManager.Despawn(gameObject);
-            }
+            TakeDamage(1);
         }
+    }
 
+    [ObserversRpc]
+    void RpcSetCharging(bool value)
+    {
+        if (animator != null)
+            animator.SetBool("charging", value);
+    }
+
+    [ObserversRpc]
+    void RpcPlayChargeSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.bossCharge);
+        }
+    }
+
+    [ObserversRpc]
+    void RpcPlayHitSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTunedSound(AudioManager.Instance.BossHit);
+        }
+    }
+
+    [ObserversRpc]
+    void RpcPlayDeathSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySound(AudioManager.Instance.EnemyDeath2);
+        }
     }
 }
