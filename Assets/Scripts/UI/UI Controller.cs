@@ -13,7 +13,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text waveText;
-    [SerializeField] private TMP_Text scoreText;  // ✅ NEU
+    [SerializeField] private TMP_Text scoreText; 
     public GameObject pausePanel;
 
     private void Awake()

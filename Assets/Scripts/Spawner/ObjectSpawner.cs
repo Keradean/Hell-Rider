@@ -1,5 +1,4 @@
-﻿// ObjectSpawner.cs
-using UnityEngine;
+﻿using UnityEngine;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Collections.Generic;

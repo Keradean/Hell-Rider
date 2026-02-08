@@ -28,6 +28,6 @@ public class GameOverManager : MonoBehaviour
     private IEnumerator LoadGameOverCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-        UnitySceneManager.LoadScene(3, LoadSceneMode.Additive);
+        UnitySceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 }

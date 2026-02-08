@@ -5,12 +5,12 @@ public class MenuManager : MonoBehaviour
 {
     public void OnNewGameButton()
     {
-        SceneManager.LoadScene(2); // erstellt die Szene mit dem Index 2 bis Lobby fertig gestellt worden ist 
+        SceneManager.LoadScene("Level 1"); 
     }
 
     public void OnBackToMenuButton()
     {
-        SceneManager.LoadScene(0);// Back to the root
+        SceneManager.LoadScene("MainMenu");// Back to the root
     }
 
     public void OnQuitButton()
