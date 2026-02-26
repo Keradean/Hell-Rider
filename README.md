@@ -465,7 +465,6 @@ Assets/
 
 **Entwickler:** Dennis De Col  
 **Projekt:** Hell Rider (Twin Fire)  
-**GitHub:** (https://github.com/Keradean/Hell-Rider)
 
 ---
 
